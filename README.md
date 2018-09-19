@@ -1,8 +1,7 @@
-# [GrapesJS Filestack](http://grapesjs.com/demo.html)
+# [GrapesJS S3](http://grapesjs.com/demo.html)
 
 This plugin replaces the default file uploader with the one from Filestack
 
-Demo: http://grapesjs.com/demo.html
 
 <p align="center"><img src="http://grapesjs.com/img/screen-fs.jpg" alt="GrapesJS" width="500" align="center"/></p>
 <br/>
@@ -12,7 +11,7 @@ Demo: http://grapesjs.com/demo.html
 ## Summary
 
 * Plugin
-  * Name: `gjs-plugin-filestack`
+  * Name: `gjs-plugin-s3`
   * Options:
       * `key` Filestack's API key (**required**)
       * `btnEl` Custom button element which triggers Filestack modal
@@ -26,7 +25,7 @@ Demo: http://grapesjs.com/demo.html
 
 ## Download
 
-* `npm i grapesjs-plugin-filestack`
+* `npm i grapesjs-plugin-s3`
 
 
 
