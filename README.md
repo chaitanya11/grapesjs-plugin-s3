@@ -27,7 +27,6 @@ Demo: http://grapesjs.com/demo.html
 ## Download
 
 * `npm i grapesjs-plugin-filestack`
-* Latest release link https://github.com/artf/grapesjs-plugin-filestack/releases/latest
 
 
 
@@ -60,8 +59,8 @@ Demo: http://grapesjs.com/demo.html
 Clone the repository
 
 ```sh
-$ git clone https://github.com/artf/grapesjs-plugin-filestack.git
-$ cd grapesjs-plugin-filestack
+$ git clone https://github.com/chaitanya11/grapesjs-plugin-s3.git
+$ cd grapesjs-plugin-s3
 ```
 
 Install it

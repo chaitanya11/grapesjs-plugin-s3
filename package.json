@@ -1,27 +1,27 @@
 {
-  "name": "grapesjs-plugin-filestack",
-  "version": "0.1.1",
-  "description": "Enable Filestack uploader inside the Asset Manager",
-  "main": "dist/grapesjs-plugin-filestack.min.js",
+  "name": "grapesjs-plugin-s3",
+  "version": "0.1.2",
+  "description": "Enable s3 uploader inside the Asset Manager",
+  "main": "dist/grapesjs-plugin-s3.min.js",
   "scripts": {
     "lint": "eslint src",
     "build": "npm run v:patch && webpack --env.production",
-    "build:css": "node-sass src/style/main.scss dist/grapesjs-plugin-filestack.css",
+    "build:css": "node-sass src/style/main.scss dist/grapesjs-plugin-s3.css",
     "v:patch": "npm version --no-git-tag-version patch",
     "start": "webpack-dev-server --open --progress --colors & npm run build:css -- -w"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/artf/grapesjs-plugin-filestack.git"
+    "url": "https://github.com/chaitanya11/grapesjs-plugin-s3.git"
   },
   "keywords": [
     "grapesjs",
     "plugin",
-    "filestack",
+    "S3",
     "upload",
     "asset"
   ],
-  "author": "Artur Arseniev",
+  "author": "Chaitanya Garikipati",
   "license": "BSD-3-Clause",
   "babel": {
     "presets": [
@@ -35,14 +35,18 @@
     "grapesjs": "0.x"
   },
   "devDependencies": {
+    "@types/node": "^10.9.4",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "eslint": "^4.1.1",
     "html-webpack-plugin": "^2.30.1",
     "node-sass": "^3.13.0",
-    "eslint": "^4.1.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.315.0"
   }
 }
