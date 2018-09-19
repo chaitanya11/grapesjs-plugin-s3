@@ -2,7 +2,6 @@
 
 This plugin replaces the default file uploader with the one from Filestack
 
-Demo: http://grapesjs.com/demo.html
 
 <p align="center"><img src="http://grapesjs.com/img/screen-fs.jpg" alt="GrapesJS" width="500" align="center"/></p>
 <br/>
