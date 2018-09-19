@@ -39,12 +39,12 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
       c[name] = defaults[name];
   }
 
-  if([c.secretAccessKey, c.accessKeyId, c.sessionToken].some(
-    (configuration)=> (configuration == undefined) | (configuration == null))
-    ) {
-      console.log('coming');
-      throw new Error('Aws configuration is missing');
-    }
+  if ([c.secretAccessKey, c.accessKeyId, c.sessionToken].some(
+    (configuration) => (configuration == undefined) | (configuration == null))
+  ) {
+    console.log('coming');
+    throw new Error('Aws configuration is missing');
+  }
   if (!c.imgFormats) {
     c.imgFormats = ["png", "jpeg", "jpg"];
   }
@@ -74,16 +74,12 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
     if (err) console.error(err);
     else {
       const signedUrls = data.Contents.map((s3Object) => {
-        if(c.imgFormats.some((imgFormat) => s3Object.Key.includes(imgFormat))) {
+        if (c.imgFormats.some((imgFormat) => s3Object.Key.includes(imgFormat))) {
           let fileName = s3Object.Key.split('/');
           fileName = fileName[fileName.length - 1];
-          const s3ObjectUrl = s3.getSignedUrl('getObject', {
-            Bucket: s3Params.Bucket,
-            Key: s3Object.Key,
-            Expires: 24 * 60 * 60
-          });
+          const s3ObjectUrl = 'https://' + c.bucketName + '.s3.amazonaws.com/' + c.prefix + s3Object.Key;
           return {
-            url : s3ObjectUrl,
+            url: s3ObjectUrl,
             name: fileName
           };
         }
