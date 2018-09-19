@@ -77,7 +77,7 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
         if (c.imgFormats.some((imgFormat) => s3Object.Key.includes(imgFormat))) {
           let fileName = s3Object.Key.split('/');
           fileName = fileName[fileName.length - 1];
-          const s3ObjectUrl = 'https://' + c.bucketName + '.s3.amazonaws.com/' + c.prefix + s3Object.Key;
+          const s3ObjectUrl = 'https://' + c.bucketName + '.s3.amazonaws.com/' + s3Object.Key;
           return {
             url: s3ObjectUrl,
             name: fileName
