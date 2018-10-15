@@ -90,6 +90,7 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
 
   // When the Asset Manager modal is opened
   editor.on('run:open-assets', () => {
+    let inputEl;
     const modal = editor.Modal;
     const modalBody = modal.getContentEl();
     const uploader = modalBody.querySelector('.' + pfx + 'am-file-uploader');
@@ -108,11 +109,23 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
         btnEl = document.createElement('button');
         btnEl.className = pfx + 'btn-prim ' + pfx + 'btn-s3';
         btnEl.innerHTML = c.btnText;
+        inputEl = document.createElement("INPUT");
+        inputEl.setAttribute("type", "file");
+        inputEl.style.opacity = 0;
+        inputEl.onchange = (e) => {
+          console.log(e);
+          let file = e.target.files[0];
+          // upload to s3
+          console.log(file);
+          uploadToS3(file);
+        }
+        document.body.appendChild(inputEl);
       }
 
       btnEl.onclick = () => {
         // TODO should create a popup to upload new image.
         console.log('Add images');
+        inputEl.click();
       };
     }
 
@@ -130,5 +143,22 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
     });
     return editor.AssetManager.add(urls);
   };
+
+  const uploadToS3 = (file) => {
+    const objectName = c.prefix + file.name;
+    const params = {
+      Bucket: c.bucketName,
+      Key: objectName,
+      ContentType: file.type,
+      Body: file
+    }
+    s3.putObject(params, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(data);
+      }
+    });
+  }
 
 });
