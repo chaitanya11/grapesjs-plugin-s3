@@ -57,7 +57,9 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
     c.prefix = "content/img/";
   }
 
-
+  const loader = document.createElement('div');
+  loader.id = 'cover-spin';
+  document.body.append(loader);
 
   AWS.config.update({
     accessKeyId: c.accessKeyId,
@@ -65,28 +67,31 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
     sessionToken: c.sessionToken
   });
   const s3 = new S3();
-  const s3Params = {
-    Bucket: c.bucketName,
-    Prefix: c.prefix
-  };
+  function listS3Objects(params) {
+    const s3Params = {
+      Bucket: c.bucketName,
+      Prefix: c.prefix
+    };
 
-  s3.listObjects(s3Params, (err, data) => {
-    if (err) console.error(err);
-    else {
-      const signedUrls = data.Contents.map((s3Object) => {
-        if (c.imgFormats.some((imgFormat) => s3Object.Key.includes(imgFormat))) {
-          let fileName = s3Object.Key.split('/');
-          fileName = fileName[fileName.length - 1];
-          const s3ObjectUrl = 'https://' + c.bucketName + '.s3.amazonaws.com/' + s3Object.Key;
-          return {
-            url: s3ObjectUrl,
-            name: fileName
-          };
-        }
-      }).filter(signedUrl => signedUrl != undefined);
-      addAssets(signedUrls);
-    }
-  });
+    s3.listObjects(s3Params, (err, data) => {
+      if (err) console.error(err);
+      else {
+        const signedUrls = data.Contents.map((s3Object) => {
+          if (c.imgFormats.some((imgFormat) => s3Object.Key.includes(imgFormat))) {
+            let fileName = s3Object.Key.split('/');
+            fileName = fileName[fileName.length - 1];
+            const s3ObjectUrl = 'https://' + c.bucketName + '.s3.amazonaws.com/' + s3Object.Key;
+            return {
+              url: s3ObjectUrl,
+              name: fileName
+            };
+          }
+        }).filter(signedUrl => signedUrl != undefined);
+        addAssets(signedUrls);
+      }
+    });
+  }
+  listS3Objects();
 
   // When the Asset Manager modal is opened
   editor.on('run:open-assets', () => {
@@ -137,14 +142,25 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
    * @param {Array} files
    */
   const addAssets = (files) => {
-    const urls = files.map((file) => {
+    let urls = files.map((file) => {
       file.src = file.url;
       return file;
+    });
+    urls = urls.filter(url => {
+      if (editor.AssetManager.get(url.url)) {
+        return false;
+      }
+      return true;
     });
     return editor.AssetManager.add(urls);
   };
 
+  /**
+   * Upload file to s3.
+   * @param {fileObject} file 
+   */
   const uploadToS3 = (file) => {
+    showLoader();
     const objectName = c.prefix + file.name;
     const params = {
       Bucket: c.bucketName,
@@ -157,8 +173,24 @@ export default grapesjs.plugins.add('gjs-plugin-s3', (editor, opts = {}) => {
         console.log(err);
       } else {
         console.log(data);
+        listS3Objects();
+        hideLoader();
       }
     });
+  }
+
+  /**
+   * Displays loader.
+   */
+  function showLoader() {
+    loader.style.display = 'block'
+  }
+
+  /**
+   * Hides loader
+   */
+  function hideLoader() {
+    loader.style.display = 'none';
   }
 
 });

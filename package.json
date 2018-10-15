@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-plugin-s3",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Enable s3 uploader inside the Asset Manager",
   "main": "dist/grapesjs-plugin-s3.min.js",
   "scripts": {
