@@ -38,7 +38,7 @@ This plugin replaces the default file uploader with the one from Filestack
 <script type="text/javascript">
   var editor = grapesjs.init({
       container : '#gjs',
-      plugins: ['gjs-plugin-filestack'],
+      plugins: ['gjs-plugin-s3'],
       pluginsOpts: {
         'gjs-plugin-s3': {/* ...options */}
       }
