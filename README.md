@@ -1,4 +1,4 @@
-# [GrapesJS S3]
+# GrapesJS S3
 
 This plugin replaces the default file uploader with the one from Filestack
 
